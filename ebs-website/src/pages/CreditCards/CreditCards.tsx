@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Form, Input, Select, Button, Card, Rate, Tag, Typography } from 'antd';
-import { CreditCardOutlined, CheckCircleFilled, StarFilled } from '@ant-design/icons';
+import { CreditCardOutlined, CheckCircleFilled, StarFilled, LeftOutlined, RightOutlined, Star, SafetyCertificateOutlined, GiftOutlined } from '@ant-design/icons';
 import creditCardImg from '../../assets/images/services/credit-card.jpg';
 import creditCardHeroImg from '../../assets/images/hero/creditcard.png';
+import auCard from '../../assets/images/cards/AU.png';
+import axisCard from '../../assets/images/cards/AXIS.png';
+import hdfcCard from '../../assets/images/cards/HDFC.png';
+import iciciCard from '../../assets/images/cards/ICICI.png';
+import idfcCard from '../../assets/images/cards/IDFC.png';
+import indusindCard from '../../assets/images/cards/INDUSIND.png';
+import yesbankCard from '../../assets/images/cards/YESBANK.png';
 import { typography, colors, effects, spacing, breakpoints } from '../../styles/theme';
+import CardScroller from '../../components/CardScroller/CardScroller';
+import Footer from '../../components/Footer/Footer';
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -16,7 +25,7 @@ const PageContainer = styled.div`
 
 const HeroSection = styled.section`
   padding: 60px 5%;
-  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%);
   position: relative;
   display: flex;
   align-items: center;
@@ -46,13 +55,110 @@ const HeroSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(33, 147, 176, 0.9), rgba(109, 213, 237, 0.9));
+    background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%);
+    opacity: 0.85;
     z-index: 1;
+  }
+
+  /* Modern geometric shapes */
+  .shape-1, .shape-2, .shape-3, .shape-4 {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(5px);
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .shape-1 {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    right: -50px;
+    animation: float 15s ease-in-out infinite;
+  }
+
+  .shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -50px;
+    left: -50px;
+    animation: float 20s ease-in-out infinite reverse;
+  }
+
+  .shape-3 {
+    width: 150px;
+    height: 150px;
+    top: 50%;
+    left: 15%;
+    animation: float 18s ease-in-out infinite 1s;
+  }
+
+  .shape-4 {
+    width: 100px;
+    height: 100px;
+    bottom: 20%;
+    right: 15%;
+    animation: float 12s ease-in-out infinite 0.5s;
+  }
+
+  /* Animated lines */
+  .line-1, .line-2 {
+    position: absolute;
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    z-index: 2;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+
+  .line-1 {
+    top: 20%;
+    right: 10%;
+    animation: moveLine 8s linear infinite;
+  }
+
+  .line-2 {
+    bottom: 30%;
+    left: 5%;
+    animation: moveLine 12s linear infinite reverse;
+  }
+
+  /* Dot grid pattern */
+  .dot-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 2;
+    opacity: 0.7;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+
+  @keyframes moveLine {
+    0% {
+      transform: translateX(-100%) rotate(-45deg);
+    }
+    100% {
+      transform: translateX(100%) rotate(-45deg);
+    }
   }
 
   > * {
     position: relative;
-    z-index: 2;
+    z-index: 3;
   }
 
   @media (max-width: 1024px) {
@@ -298,9 +404,9 @@ const MarqueeWrapper = styled.div`
 
 const MarqueeContainer = styled.div`
   display: flex;
-  gap: 40px;
-  animation: scroll 30s linear infinite;
-  padding: 20px 0;
+  gap: 60px;
+  animation: scroll 35s linear infinite;
+  padding: 30px 0;
 
   @keyframes scroll {
     0% {
@@ -320,13 +426,13 @@ const BankLogo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 160px;
-  height: 60px;
+  min-width: 200px;
+  height: 80px;
   background: ${colors.background.white};
-  border-radius: 12px;
-  padding: 12px 24px;
-  box-shadow: ${effects.shadow.small};
+  border-radius: 16px;
+  padding: 16px 32px;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
   img {
     max-width: 100%;
@@ -336,7 +442,7 @@ const BankLogo = styled.div`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${effects.shadow.medium};
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -358,7 +464,6 @@ const ApplicationContainer = styled.div`
   position: relative;
   background: ${colors.background.white};
   border-radius: 24px;
-  box-shadow: ${effects.shadow.medium};
   overflow: hidden;
 
   @media (max-width: ${breakpoints.tablet}) {
@@ -369,7 +474,7 @@ const ApplicationContainer = styled.div`
 
 const FormLeftSection = styled.div`
   width: 45%;
-  background: ${colors.primary.gradient};
+  background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%);
   color: ${colors.text.white};
   padding: 50px;
   position: relative;
@@ -529,7 +634,6 @@ const StyledForm = styled(Form)`
 
     &:focus {
       border-color: ${colors.primary.start} !important;
-      box-shadow: 0 4px 12px rgba(33, 147, 176, 0.1) !important;
     }
   }
 
@@ -551,6 +655,26 @@ const StyledForm = styled(Form)`
       font-size: ${typography.fontSize.body.small};
       height: auto;
     }
+  }
+`;
+
+const SubmitButton = styled(Button)`
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%);
+  border: none;
+  margin-top: 20px;
+
+  &:hover {
+    background: linear-gradient(135deg, #023e8a 0%, #0077b6 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 `;
 
@@ -576,118 +700,6 @@ const FeatureTag = styled(Tag)`
   &:hover {
     background: rgba(255, 255, 255, 0.25) !important;
     transform: translateY(-2px);
-  }
-`;
-
-const CardsSection2024 = styled.section`
-  width: 100vw;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  background: ${colors.background.light};
-  padding: 80px 0;
-`;
-
-const CardsContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-`;
-
-const SectionHeader = styled.div`
-  text-align: center;
-  margin-bottom: 60px;
-
-  h2 {
-    font-family: ${typography.fontFamily.heading};
-    font-size: ${typography.fontSize.h2.desktop};
-    font-weight: ${typography.fontWeight.bold};
-    color: ${colors.text.primary};
-    margin-bottom: 16px;
-    background: ${colors.primary.gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  p {
-    font-family: ${typography.fontFamily.primary};
-    font-size: ${typography.fontSize.body.large};
-    color: ${colors.text.secondary};
-    max-width: 600px;
-    margin: 0 auto;
-  }
-`;
-
-const CardsList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: ${breakpoints.mobile}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const CardBox = styled.div`
-  background: white;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: ${effects.shadow.small};
-  transition: all 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: ${effects.shadow.medium};
-  }
-
-  h3 {
-    font-family: ${typography.fontFamily.heading};
-    font-size: ${typography.fontSize.h4.desktop};
-    font-weight: ${typography.fontWeight.bold};
-    color: ${colors.text.primary};
-    margin-bottom: 20px;
-  }
-`;
-
-const CardImageContainer = styled.div`
-  width: 100%;
-  height: 180px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${colors.background.light};
-  border-radius: 12px;
-  padding: 20px;
-
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-`;
-
-const CardFeatureList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    font-size: ${typography.fontSize.body.regular};
-    color: ${colors.text.secondary};
-
-    svg {
-      color: ${colors.primary.default};
-      font-size: 16px;
-    }
   }
 `;
 
@@ -761,9 +773,58 @@ const bankLogos = [
   { src: '/images/partners/federal.png', name: 'Federal Bank' }
 ];
 
+const SectionTitle = styled.div`
+  text-align: center;
+  margin-bottom: ${spacing.xxl};
+  padding-top: ${spacing.xxl};
+
+  h2 {
+    font-family: ${typography.fontFamily.heading};
+    font-size: ${typography.fontSize.h2.desktop};
+    font-weight: ${typography.fontWeight.bold};
+    line-height: 1.2;
+    background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: ${spacing.md};
+
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: ${typography.fontSize.h2.tablet};
+    }
+
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: ${typography.fontSize.h2.mobile};
+    }
+  }
+
+  p {
+    font-family: ${typography.fontFamily.primary};
+    font-size: ${typography.fontSize.body.large};
+    color: ${colors.text.secondary};
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: ${typography.lineHeight.relaxed};
+
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: ${typography.fontSize.body.regular};
+    }
+  }
+`;
+
 const CreditCards: React.FC = () => {
   const [form] = Form.useForm();
   const [activeFilter, setActiveFilter] = useState('top');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const cards = [
+    { src: auCard, alt: "AU Bank Credit Card" },
+    { src: axisCard, alt: "Axis Bank Credit Card" },
+    { src: hdfcCard, alt: "HDFC Bank Credit Card" },
+    { src: iciciCard, alt: "ICICI Bank Credit Card" },
+    { src: idfcCard, alt: "IDFC Bank Credit Card" },
+    { src: indusindCard, alt: "IndusInd Bank Credit Card" },
+    { src: yesbankCard, alt: "Yes Bank Credit Card" },
+  ];
 
   const filters = [
     { id: 'top', label: 'Top Cards' },
@@ -776,6 +837,23 @@ const CreditCards: React.FC = () => {
     { id: 'rewards', label: 'Rewards' }
   ];
 
+  const handlePrev = () => {
+    setCurrentIndex(prev => (prev === 0 ? cards.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex(prev => (prev === cards.length - 1 ? 0 : prev + 1));
+  };
+
+  const getVisibleCards = () => {
+    const visibleCards = [];
+    for (let i = 0; i < 3; i++) {
+      const index = (currentIndex + i) % cards.length;
+      visibleCards.push(cards[index]);
+    }
+    return visibleCards;
+  };
+
   const onFinish = (values: any) => {
     console.log('Form values:', values);
   };
@@ -783,11 +861,13 @@ const CreditCards: React.FC = () => {
   return (
     <PageContainer>
       <HeroSection>
-        <FloatingElements>
-          <FloatingElement />
-          <FloatingElement />
-          <FloatingElement />
-        </FloatingElements>
+        <div className="shape-1"></div>
+        <div className="shape-2"></div>
+        <div className="shape-3"></div>
+        <div className="shape-4"></div>
+        <div className="line-1"></div>
+        <div className="line-2"></div>
+        <div className="dot-pattern"></div>
         <HeroContent>
           <Title level={1}>
             Transform Your Spending with Premium Credit Cards
@@ -920,101 +1000,28 @@ const CreditCards: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" block size="large">
+                  <SubmitButton type="primary" htmlType="submit" block size="large">
                     Submit Application
-                  </Button>
+                  </SubmitButton>
                 </Form.Item>
               </StyledForm>
             </FormContainer>
           </ApplicationContainer>
         </ApplicationSection>
 
-        <CardsSection2024>
-          <CardsContainer>
-            <SectionHeader>
-              <h2>Best Credit Cards of 2024</h2>
-              <p>Compare and choose from our curated selection of premium credit cards with exclusive benefits</p>
-            </SectionHeader>
-
-            <CardsList>
-              <CardBox>
-                <CardImageContainer>
-                  <img src="/images/cards/rewards-plus.png" alt="Rewards Plus Credit Card" />
-                </CardImageContainer>
-                <h3>Rewards Plus</h3>
-                <CardFeatureList>
-                  <li>
-                    <CheckCircleFilled />
-                    5X reward points on shopping
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    3X points on dining
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    Welcome bonus: 10,000 points
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    Zero joining fee
-                  </li>
-                </CardFeatureList>
-              </CardBox>
-
-              <CardBox>
-                <CardImageContainer>
-                  <img src="/images/cards/travel-elite.png" alt="Travel Elite Credit Card" />
-                </CardImageContainer>
-                <h3>Travel Elite</h3>
-                <CardFeatureList>
-                  <li>
-                    <CheckCircleFilled />
-                    Complimentary lounge access
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    4X miles on travel bookings
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    Travel insurance included
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    Zero forex markup
-                  </li>
-                </CardFeatureList>
-              </CardBox>
-
-              <CardBox>
-                <CardImageContainer>
-                  <img src="/images/cards/cashback-pro.png" alt="Cashback Pro Credit Card" />
-                </CardImageContainer>
-                <h3>Cashback Pro</h3>
-                <CardFeatureList>
-                  <li>
-                    <CheckCircleFilled />
-                    2% cashback on all spends
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    5% on bill payments
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    No minimum spend required
-                  </li>
-                  <li>
-                    <CheckCircleFilled />
-                    Monthly cashback credit
-                  </li>
-                </CardFeatureList>
-              </CardBox>
-            </CardsList>
-          </CardsContainer>
-        </CardsSection2024>
+        <section>
+          <CardScroller images={[
+            auCard,
+            axisCard,
+            hdfcCard,
+            iciciCard,
+            idfcCard,
+            indusindCard,
+            yesbankCard
+          ]} />
+        </section>
       </ContentSection>
+      <Footer />
     </PageContainer>
   );
 };
